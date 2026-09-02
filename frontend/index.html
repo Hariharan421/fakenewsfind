@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Fake News Detector</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="container">
+            <h1>📰 Fake News Detector</h1>
+            <p>AI-powered news credibility checker</p>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <section class="hero">
+            <h2>Check Whether News Is Real or Fake</h2>
+            <p>
+                Enter a news article or headline below and let our
+                machine learning model analyze it.
+            </p>
+        </section>
+
+        <section class="detector-card">
+
+            <label for="newsText">Enter News</label>
+
+            <textarea
+                id="newsText"
+                placeholder="Type or paste your news article here..."
+            ></textarea>
+
+            <div class="buttons">
+
+                <button id="checkButton" onclick="checkNews()">
+                    🔍 Check News
+                </button>
+
+                <button class="clear-btn" onclick="clearNews()">
+                    🗑 Clear
+                </button>
+
+            </div>
+
+            <div id="loading" class="loading">
+                Analyzing news...
+            </div>
+
+            <div id="result" class="result">
+                <div id="resultIcon"></div>
+                <h3 id="resultTitle"></h3>
+                <p id="resultMessage"></p>
+            </div>
+
+        </section>
+
+        <section class="info-section">
+
+            <div class="info-card">
+                <div class="info-icon">🤖</div>
+                <h3>Machine Learning</h3>
+                <p>
+                    The system uses a trained machine learning model
+                    to classify news.
+                </p>
+            </div>
+
+            <div class="info-card">
+                <div class="info-icon">⚡</div>
+                <h3>Fast Analysis</h3>
+                <p>
+                    Submit your news and receive a prediction quickly
+                    through the Flask API.
+                </p>
+            </div>
+
+            <div class="info-card">
+                <div class="info-icon">🔎</div>
+                <h3>Easy to Use</h3>
+                <p>
+                    Simply enter the news and click the Check News button.
+                </p>
+            </div>
+
+        </section>
+
+        <section class="disclaimer">
+            <h3>⚠️ Disclaimer</h3>
+            <p>
+                This project is an educational machine learning application.
+                The prediction should not be considered a definitive fact-check.
+            </p>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>© 2026 Fake News Detector | Built with HTML, CSS, JavaScript & Python</p>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
