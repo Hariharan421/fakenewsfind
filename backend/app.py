@@ -1,42 +1,60 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import pickle
+import os
 
 app = Flask(__name__)
+
+# Allow requests from your GitHub Pages frontend
 CORS(app)
 
-# Load model and vectorizer
-with open("model.pkl", "rb") as file:
+# Get the folder where this app.py is located
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# Load model
+with open(os.path.join(BASE_DIR, "model.pkl"), "rb") as file:
     model = pickle.load(file)
 
-with open("vectorizer.pkl", "rb") as file:
+# Load vectorizer
+with open(os.path.join(BASE_DIR, "vectorizer.pkl"), "rb") as file:
     vectorizer = pickle.load(file)
 
 
 @app.route("/")
 def home():
-    return "Fake News Detector API is running!"
+    return jsonify({
+        "message": "Fake News Detector API is running!"
+    })
 
 
 @app.route("/predict", methods=["POST"])
 def predict():
+
     data = request.get_json()
 
-    news = data.get("news", "")
+    if not data or "news" not in data:
+        return jsonify({
+            "error": "Please provide news text"
+        }), 400
+
+    news = data["news"].strip()
 
     if not news:
-        return jsonify({"error": "Please enter news text"}), 400
+        return jsonify({
+            "error": "News text cannot be empty"
+        }), 400
 
-    # Convert news text into numbers
+    # Convert text using TF-IDF
     news_vector = vectorizer.transform([news])
 
-    # Make prediction
+    # Predict
     prediction = model.predict(news_vector)[0]
 
     return jsonify({
-        "prediction": prediction
+        "prediction": str(prediction)
     })
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
